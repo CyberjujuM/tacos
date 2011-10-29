@@ -1,0 +1,8 @@
+TacOS.config
+TacOS.creator*
+TacOS.files
+TacOS.includes
+*.o
+*.log
+*.bin
+*.a
