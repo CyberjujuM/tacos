@@ -676,8 +676,7 @@ void goForward(struct widget_t* wdg __attribute__ ((unused)), int x __attribute_
   setText(page, buf);
 }
 
-int main_pres(int argc __attribute__ ((unused)), char* argv[] __attribute__ ((unused)))
-{
+int main() {
 	struct window_t* win;
 	struct widget_t* bck;
 	struct widget_t* nxt;
@@ -776,10 +775,3 @@ int main_pres(int argc __attribute__ ((unused)), char* argv[] __attribute__ ((un
 	
 	return 0;
 }
-
-int launch_pres()
-{
-	exec((paddr_t)main_pres, "PPT",0);
-	return 0;
-}
-
