@@ -113,6 +113,8 @@ fiinou.o: ../libc/include/stdio.h ../libc/include/libio.h
 fiinou.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
 fopen.o: ../libc/include/stdio.h ../libc/include/libio.h
 fopen.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
+hello.o: ../libc/include/stdio.h ../libc/include/libio.h
+hello.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
 kill.o: ../libc/include/sys/types.h ../libc/include/signal.h
 kill.o: ../libc/include/stdio.h ../libc/include/libio.h
 kill.o: ../libc/include/stdarg.h ../libc/include/stdlib.h
