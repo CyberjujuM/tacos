@@ -1,5 +1,5 @@
 #OBJ=cube top matrix test test_sig demo cat ls fopen snake
-OBJ=test_sig cat ls mkdir kill clock_graph test_mouse pres
+OBJ=top test_sig cat ls mkdir kill clock_graph test_mouse zen_graph pres
 SUBDIRS=mishell
 LIBS=../lib/libc.a ../lib/libsystem.a ../lib/libutils.a 
 INCLUDES=-I../include/ -I../libc/include/
@@ -74,6 +74,9 @@ test_mouse: test_mouse.o
 
 pres: pres.o
 	$(LD) -o $(BIN)$@ $^ $(LIBS)
+
+zen_graph: zen_graph.o
+	$(LD) -o $(BIN)$@ $^ $(LIBS)	
 
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS) $(INCLUDES) 
