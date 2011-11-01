@@ -58,8 +58,11 @@
 #define SYS_READDIR 19
 #define SYS_MKDIR 20
 #define SYS_SIGRET 21
-#define SYS_IOCTL 22
-#define SYS_GETCLOCK 23
-#define SYS_GETDATE 24
+#define SYS_SIGSUSPEND 22
+#define SYS_IOCTL 23
+#define SYS_GETCLOCK 24
+#define SYS_GETDATE 25
+#define SYS_VGASETMODE 26
+#define SYS_VGAWRITEBUF 27
 
 #endif

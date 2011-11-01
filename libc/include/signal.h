@@ -35,7 +35,7 @@
 #ifndef _SIGNAL_H
 #define _SIGNAL_H
 
-#include <types.h>	
+#include <sys/types.h>	
 
 #define NSIG		32
 typedef unsigned long sigset_t;
@@ -95,6 +95,8 @@ typedef struct
 int kill(unsigned int pid, int sig);
 
 sighandler_t signal(int sig, sighandler_t func);
+
+int sigsuspend(const sigset_t *sigmask);
 
 int sigprocmask(int how, const sigset_t *set, sigset_t *oldset);
 

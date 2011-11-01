@@ -213,8 +213,8 @@ void reset_attribute(int n) {
 }
 
 /*
- *  Affiche le caract�re c sur l'�cran.
- *  Supporte les caract�res ANSI.
+ *  Affiche le caractère c sur l'écran.
+ *  Supporte les caractères ANSI.
  */
 void kputchar(int n, char c) {
 	// TODO : dégager ça vers la structure de la fenetre ! Risques de conflits sinon.
@@ -303,7 +303,7 @@ void kputchar(int n, char c) {
 								set_foreground(n, GREEN);
 								break;
 							case 3:
-								set_foreground(n, YELLOW); // Devrait �tre BROWN
+								set_foreground(n, YELLOW); // Devrait être BROWN
 								break;
 							case 4:
 								set_foreground(n, BLUE);
@@ -315,7 +315,7 @@ void kputchar(int n, char c) {
 								set_foreground(n, CYAN);
 								break;
 							case 7:
-								set_foreground(n, WHITE); // Devrait �tre LIGHT_GRAY. Le White c'est pour le high intensity.
+								set_foreground(n, WHITE); // Devrait être LIGHT_GRAY. Le White c'est pour le high intensity.
 								break;
 							}
 						} else {
@@ -360,7 +360,7 @@ void kputchar(int n, char c) {
 								set_background(n, GREEN);
 								break;
 							case 3:
-								set_background(n, YELLOW); // Devrait �tre BROWN
+								set_background(n, YELLOW); // Devrait être BROWN
 								break;
 							case 4:
 								set_background(n, BLUE);
@@ -372,7 +372,7 @@ void kputchar(int n, char c) {
 								set_background(n, CYAN);
 								break;
 							case 7:
-								set_background(n, WHITE); // Devrait �tre LIGHT_GRAY. Le White c'est pour le high intensity.
+								set_background(n, WHITE); // Devrait être LIGHT_GRAY. Le White c'est pour le high intensity.
 								break;
 							}
 						} else {
@@ -458,7 +458,7 @@ static void kputchar_tab(int n) {
 }
 
 /**
- *	Suppression en arri�re d'un caract�re.
+ *	Suppression en arrière d'un caractère.
  */
 static void backspace(int n, char c) {
 

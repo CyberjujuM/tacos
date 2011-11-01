@@ -1,17 +1,11 @@
 /**
- * @file start.c
+ * @file vga.h
  *
  * @author TacOS developers 
  *
- * Maxime Cheramy <maxime81@gmail.com>
- * Nicolas Floquet <nicolasfloquet@gmail.com>
- * Benjamin Hautbois <bhautboi@gmail.com>
- * Ludovic Rigal <ludovic.rigal@gmail.com>
- * Simon Vernhes <simon@vernhes.eu>
- *
  * @section LICENSE
  *
- * Copyright (C) 2010 - TacOS developers.
+ * Copyright (C) 2011 - TacOS developers.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -29,25 +23,19 @@
  *
  * @section DESCRIPTION
  *
- * Description de ce que fait le fichier
+ * Header file for the VGA driver.
  */
 
-#include <libio.h>
-#include <process.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef _VGA_H_
+#define _VGA_H_
 
-typedef int main_type(int, char**);
+#include <ksyscall.h>
+#include <vga_types.h>
 
-extern main_type main;
+void VGA_set_mode(enum VGA_mode mode);
+void VGA_write_buf(char *buffer);
 
-void start_main(int argc, char** argv)
-{
-	init_process_malloc();
-	
-	init_signals();
+SYSCALL_HANDLER1(sys_vgasetmode, enum VGA_mode mode);
+SYSCALL_HANDLER1(sys_vgawritebuf, char *buffer);
 
-	exit(main(argc, argv));
-}
-
+#endif

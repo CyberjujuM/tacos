@@ -1,17 +1,11 @@
 /**
- * @file start.c
+ * @file mouse.h
  *
  * @author TacOS developers 
  *
- * Maxime Cheramy <maxime81@gmail.com>
- * Nicolas Floquet <nicolasfloquet@gmail.com>
- * Benjamin Hautbois <bhautboi@gmail.com>
- * Ludovic Rigal <ludovic.rigal@gmail.com>
- * Simon Vernhes <simon@vernhes.eu>
- *
  * @section LICENSE
  *
- * Copyright (C) 2010 - TacOS developers.
+ * Copyright (C) 2011 - TacOS developers.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -29,25 +23,12 @@
  *
  * @section DESCRIPTION
  *
- * Description de ce que fait le fichier
+ * Header file for the mouse driver.
  */
 
-#include <libio.h>
-#include <process.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef _MOUSE_H_
+#define _MOUSE_H_
 
-typedef int main_type(int, char**);
+void init_mouse();
 
-extern main_type main;
-
-void start_main(int argc, char** argv)
-{
-	init_process_malloc();
-	
-	init_signals();
-
-	exit(main(argc, argv));
-}
-
+#endif

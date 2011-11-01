@@ -35,7 +35,6 @@
 #include <dirent.h>
 #include <floppy.h>
 #include <kmalloc.h>
-#include <mouse.h>
 #include <pci.h>
 #include <process.h>
 #include <stdio.h>
@@ -171,6 +170,9 @@ int ps()
 					case PROCSTATE_WAITING:
 							printf("WAITING\n");
 							break;
+					case PROCSTATE_SUSPENDED:
+							printf("SUSPENDED\n");
+							break;
 					case PROCSTATE_TERMINATED:
 							printf("TERMINATED\n");
 							break;
@@ -239,8 +241,6 @@ void print_logo_serial()
 
 int shell(int argc __attribute__ ((unused)), char** argv __attribute__ ((unused)))
 {
-	
-	 init_stdfiles(&stdin, &stdout, &stderr);
 	load_symtable();
 	char buffer[80];
 	
