@@ -188,12 +188,12 @@ int arg_build(char* string, vaddr_t base, char*** argv_ptr)
 	return argc;
 }
 
-vaddr_t init_stack(uint32_t* base, char* args, paddr_t return_func) {
+vaddr_t init_stack(uint32_t* base, char* args, paddr_t return_func __attribute__ ((unused))) {
 		int argc;
 		char** argv;
 		uint32_t* stack_ptr;
 		
-		argc = arg_build(args, base, &argv);
+    argc = arg_build(args, (vaddr_t) base, &argv);
 		
 		stack_ptr = (uint32_t*) argv[0];
 		*(stack_ptr-1) = (vaddr_t) argv;
@@ -203,6 +203,7 @@ vaddr_t init_stack(uint32_t* base, char* args, paddr_t return_func) {
 		stack_ptr = stack_ptr - 3;
 		
 		return (vaddr_t) stack_ptr;
+
 }
 
 void init_regs(regs_t* regs, vaddr_t esp, vaddr_t kesp, vaddr_t eip) {
@@ -260,16 +261,18 @@ void free_init_data(process_init_data_t* init_data) {
 
 process_t* create_process_elf(process_init_data_t* init_data)
 {
-	uint32_t *sys_stack, *user_stack;
+  uint32_t *sys_stack;
+  uint32_t *user_stack;
+
 	process_init_data_t* init_data_dup;
 	process_t* new_proc;
 	
-	char** argv;
-	char* args;
-	int argc;
+  //char** argv;
+  //char* args;
+  //int argc;
 	uint32_t* stack_ptr;
 	
-	vaddr_t temp_buffer;
+  //vaddr_t temp_buffer;
 	
 		
 	int i;
@@ -319,8 +322,8 @@ process_t* create_process_elf(process_init_data_t* init_data)
 		memcpy((void*)USER_PROCESS_BASE, (void*)init_data_dup->data, init_data_dup->mem_size);
 		
 		/* Initialisation de la pile utilisateur */
-		user_stack = USER_PROCESS_BASE + init_data_dup->mem_size + init_data_dup->stack_size-1;
-		stack_ptr = init_stack(user_stack, init_data_dup->args, exit);
+    user_stack = (uint32_t*)USER_PROCESS_BASE + init_data_dup->mem_size + init_data_dup->stack_size-1;
+    stack_ptr = (uint32_t*) init_stack(user_stack, init_data_dup->args, (paddr_t) exit);
 		
 		/* TODO : Ajouter (ici ?) le passage de l'environnement utilisateur */
 
@@ -341,7 +344,7 @@ process_t* create_process_elf(process_init_data_t* init_data)
 	asm("sti");
 	
 	/* Initialisation des registres */
-	init_regs(&(new_proc->regs), stack_ptr, (&sys_stack[init_data_dup->stack_size-1]), init_data_dup->entry_point);
+  init_regs(&(new_proc->regs), (vaddr_t) stack_ptr, (vaddr_t) (&sys_stack[init_data_dup->stack_size-1]), init_data_dup->entry_point);
 	
 	/* Initialisation des compteurs de temps CPU */
 	new_proc->user_time = 0;

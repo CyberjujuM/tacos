@@ -57,6 +57,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/syscall.h>
+#include "ksignal.h"
 
 #define USER_PROCESS 0
 #define KERNEL_PROCESS 1
@@ -169,7 +170,7 @@ void* schedule(void* data __attribute__ ((unused)))
 		/* On récupere un pointeur de pile pour acceder aux registres empilés */
 		asm("mov (%%ebp), %%eax; mov %%eax, %0" : "=m" (stack_ptr) : );
 		
-		intframe* frame = stack_ptr + 2;
+    intframe* frame = (intframe*) stack_ptr + 2;
 
 		current->regs.eflags = frame->eflags;
 		current->regs.cs  = frame->cs;

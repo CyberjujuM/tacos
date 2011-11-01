@@ -56,7 +56,7 @@ SYSCALL_HANDLER0(sys_sigret);
 SYSCALL_HANDLER1(sys_sigsuspend, sigset_t* mask);
 
 int exec_sighandler(process_t* process);
-
+int signal_pending(process_t* process);
 
 
 #endif /* _KSIGNAL_H */

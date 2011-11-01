@@ -35,9 +35,12 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <signal.h>
+#include "string.h"
+#include "stdlib.h"
+#include "process.h"
 
 
-void handler(int signal) {
+void handler(int signal __attribute__ ((unused))) {
 	printf("handler!\n");
 }
 
