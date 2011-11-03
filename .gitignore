@@ -3,6 +3,11 @@ TacOS.creator*
 TacOS.files
 TacOS.includes
 *.o
-*.log
-*.bin
 *.a
+*.log
+*.bak
+*.img
+*.bin
+*.sw*
+bin/*
+.gitignore
