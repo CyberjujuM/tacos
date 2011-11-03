@@ -82,6 +82,7 @@
 #include <drivers/dummy_driver.h>
 #include <drivers/serial.h>
 #include <drivers/mouse.h>
+#include <drivers/vesa.h>
 
 typedef struct
 {
@@ -205,6 +206,7 @@ void cmain (unsigned long magic, unsigned long addr) {
 	init_driver_list();
 	init_dummy();
 	init_mouse();
+	init_vesa();
 	
 	/* ************************** */
 	floppy_detect_drives();

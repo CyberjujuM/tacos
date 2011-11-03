@@ -6,6 +6,7 @@ i440fxsupport: enabled=1, slot2=ne2k
 1.44M 3.5" media:
 floppya: 1_44=core.img, status=inserted
 boot: floppy
+i440fxsupport: enabled=1, slot1=pcivga
 
 keyboard_mapping: enabled=1, map=$BXSHARE/keymaps/x11-pc-fr.map
 

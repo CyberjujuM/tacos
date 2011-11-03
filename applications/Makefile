@@ -1,5 +1,5 @@
 #OBJ=cube top matrix test test_sig demo cat ls fopen snake
-OBJ=top test_sig cat ls mkdir kill clock_graph test_mouse zen_graph pres
+OBJ=top test_sig cat ls mkdir kill clock_graph test_mouse zen_graph
 SUBDIRS=mishell
 LIBS=../lib/libc.a ../lib/libsystem.a ../lib/libutils.a 
 INCLUDES=-I../include/ -I../libc/include/
@@ -97,9 +97,11 @@ clean:
 
 cat.o: ../libc/include/stdio.h ../libc/include/libio.h
 cat.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
-clock_graph.o: ../libc/include/string.h ../libc/include/sys/types.h
-clock_graph.o: ../libc/include/sys/syscall.h ../libc/include/time.h
-clock_graph.o: ../libc/include/unistd.h ../include/vga_types.h
+clock_graph.o: ../libc/include/stdio.h ../libc/include/libio.h
+clock_graph.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
+clock_graph.o: ../libc/include/fcntl.h ../libc/include/unistd.h
+clock_graph.o: ../libc/include/string.h ../libc/include/time.h
+clock_graph.o: ../libc/include/sys/ioctl.h ../include/vesa_types.h
 cube.o: ../libc/include/stdio.h ../libc/include/libio.h
 cube.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
 cube.o: ../libc/include/stdlib.h ../libc/include/malloc.h
@@ -137,6 +139,10 @@ matrix.o: ../include/vmm.h ../libc/include/signal.h
 mkdir.o: ../libc/include/dirent.h ../libc/include/sys/types.h
 mkdir.o: ../libc/include/sys/stat.h ../libc/include/stdio.h
 mkdir.o: ../libc/include/libio.h ../libc/include/stdarg.h
+noxeyes.o: ../libc/include/fcntl.h ../libc/include/stdio.h
+noxeyes.o: ../libc/include/libio.h ../libc/include/sys/types.h
+noxeyes.o: ../libc/include/stdarg.h ../libc/include/stdlib.h
+noxeyes.o: ../libc/include/malloc.h ../libc/include/unistd.h
 pres.o: ../libc/include/stdio.h ../libc/include/libio.h
 pres.o: ../libc/include/sys/types.h ../libc/include/stdarg.h ../include/gui.h
 pres.o: ../include/types.h ../include/process.h ../include/vmm.h
@@ -171,3 +177,9 @@ zen.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
 zen.o: ../libc/include/stdlib.h ../libc/include/malloc.h
 zen.o: ../libc/include/time.h ../libc/include/string.h
 zen.o: ../libc/include/unistd.h
+zen_graph.o: ../libc/include/stdio.h ../libc/include/libio.h
+zen_graph.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
+zen_graph.o: ../libc/include/stdlib.h ../libc/include/malloc.h
+zen_graph.o: ../libc/include/time.h ../libc/include/string.h
+zen_graph.o: ../libc/include/unistd.h ../include/vga_types.h
+zen_graph.o: ../libc/include/sys/syscall.h

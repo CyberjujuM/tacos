@@ -3,7 +3,7 @@ CFLAGS=-W -Wall -g -ffreestanding -nostdlib -nostdinc -nostartfiles -nodefaultli
 
 SRCS = *.c
 
-all: boot.o exception_wrappers.o interrupts_wrappers.o kdirent.o kstdio.o kernel.o i8259.o idt.o gdt.o memory.o exception.o interrupts.o scheduler.o kprocess.o pagination.o kpanic.o ksyscall.o vmm.o kmalloc.o fat.o fpu.o vm86.o ksem.o kfcntl.o kunistd.o ksignal.o round_robin.o events.o clock.o i8254.o kdriver.o drivers/dummy_driver.o drivers/serial.o drivers/mouse.o symtable.o module.o
+all: boot.o exception_wrappers.o interrupts_wrappers.o kdirent.o kstdio.o kernel.o i8259.o idt.o gdt.o memory.o exception.o interrupts.o scheduler.o kprocess.o pagination.o kpanic.o ksyscall.o vmm.o kmalloc.o fat.o fpu.o vm86.o ksem.o kfcntl.o kunistd.o ksignal.o round_robin.o events.o clock.o i8254.o kdriver.o drivers/dummy_driver.o drivers/serial.o drivers/mouse.o drivers/vesa.o symtable.o module.o
 
 boot.o: boot.S
 	$(CC) -o $@ -c $< $(CFLAGS) $(INCLUDES) -fno-stack-protector
@@ -18,7 +18,7 @@ interrupts_wrappers.o: interrupts_wrappers.S ../include/interrupts.h
 	$(CC) -o $@ -c $< $(CFLAGS) $(INCLUDES) 
 
 clean:
-	rm -f *.o
+	rm -f *.o drivers/*.o
 
 depend: $(SRCS)
 	makedepend -Y $(INCLUDES) -- $(CFLAGS) -- $^
@@ -81,6 +81,7 @@ kernel.o: ../include/klog.h ../include/kstdio.h include/kdriver.h
 kernel.o: include/kdirent.h ../libc/include/dirent.h ../include/vga.h
 kernel.o: ../include/vga_types.h include/drivers/dummy_driver.h
 kernel.o: include/drivers/serial.h include/drivers/mouse.h
+kernel.o: include/drivers/vesa.h
 kfcntl.o: include/kprocess.h ../include/process.h ../libc/include/libio.h
 kfcntl.o: ../libc/include/sys/types.h ../include/types.h ../include/vmm.h
 kfcntl.o: ../libc/include/signal.h include/ksyscall.h include/scheduler.h

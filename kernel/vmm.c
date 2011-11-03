@@ -199,7 +199,7 @@ int map(paddr_t phys_page_addr, vaddr_t virt_page_addr)
 	return 0;
 }
 
-static void unmap(vaddr_t virt_page_addr)
+void unmap(vaddr_t virt_page_addr)
 {
 	int dir = virt_page_addr >> 22;
 	int table = (virt_page_addr & 0x003FF000) >> 12;
