@@ -46,8 +46,6 @@
 
 struct _file_descriptor;
 
-typedef int (*ioctl_t)(struct _open_file_descriptor*, unsigned int, void *);
-
 typedef struct _open_file_descriptor {
 	uint32_t flags;
 	uint8_t buffer[512];
@@ -60,11 +58,10 @@ typedef struct _open_file_descriptor {
 	size_t (*write)(struct _open_file_descriptor *, const void*, size_t);
 	size_t (*read)(struct _open_file_descriptor *,void*, size_t);
 	int (*seek)(struct _open_file_descriptor *, long, int);
-  ioctl_t ioctl;
+	int (*ioctl)(struct _open_file_descriptor*, unsigned int, void *);
 	int (*open) (struct _open_file_descriptor*);
 	int (*close) (struct _open_file_descriptor*);
 	int (*flush) (struct _open_file_descriptor*);
-
 } open_file_descriptor;
 
 /** 

@@ -124,9 +124,8 @@ static int sleep_shell()
 
 static int test_tty()
 {
-  struct termios oldt;
-  struct termios newt __attribute__ ((unused));
-  int ch __attribute__ ((unused));
+	struct termios oldt, newt;
+	int ch;
 	tcgetattr( STDIN_FILENO, &oldt );
 
 	return 0;

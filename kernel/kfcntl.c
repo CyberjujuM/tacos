@@ -134,10 +134,10 @@ SYSCALL_HANDLER3(sys_open, uint32_t fd_id, uint32_t p_path , uint32_t flags) {
 				di->open(process->fd[i].ofd);
 				
 			process->fd[i].ofd->write = di->write;
-      process->fd[i].ofd->read  = di->read;
-      process->fd[i].ofd->seek  = di->seek;
-      process->fd[i].ofd->ioctl = (ioctl_t) di->ioctl;
-      process->fd[i].ofd->open  = di->open;
+			process->fd[i].ofd->read = di->read;
+			process->fd[i].ofd->seek = di->seek;
+			process->fd[i].ofd->ioctl = di->ioctl;
+			process->fd[i].ofd->open = di->open;
 			process->fd[i].ofd->close = di->close;
 			process->fd[i].ofd->flush = di->flush;
 			
@@ -150,8 +150,8 @@ SYSCALL_HANDLER3(sys_open, uint32_t fd_id, uint32_t p_path , uint32_t flags) {
 		// C'est ici qu'on devrait vérifier si le fichier ouvert est spécial 
 		// pour savoir si on doit binder au file system ou à un driver.
 		process->fd[i].ofd->write = write_file;
-    process->fd[i].ofd->read  = read_file;
-    process->fd[i].ofd->seek  = seek_file;
+		process->fd[i].ofd->read = read_file;
+		process->fd[i].ofd->seek = seek_file;
 		*((int *)fd_id) = i;
 	} else {
 		*((int *)fd_id) = -1;
