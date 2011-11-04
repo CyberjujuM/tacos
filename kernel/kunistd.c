@@ -3,11 +3,6 @@
  *
  * @author TacOS developers 
  *
- * Maxime Cheramy <maxime81@gmail.com>
- * Nicolas Floquet <nicolasfloquet@gmail.com>
- * Benjamin Hautbois <bhautboi@gmail.com>
- * Ludovic Rigal <ludovic.rigal@gmail.com>
- * Simon Vernhes <simon@vernhes.eu>
  *
  * @section LICENSE
  *
@@ -38,7 +33,6 @@
 #include <libio.h>
 #include <kfcntl.h>
 #include <klog.h>
-#include <stdio.h>
 
 SYSCALL_HANDLER3(sys_write, uint32_t fd, const void *buf, size_t *c) {
 	process_t * process = get_current_process();

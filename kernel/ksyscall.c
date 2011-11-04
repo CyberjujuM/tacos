@@ -3,11 +3,6 @@
  *
  * @author TacOS developers 
  *
- * Maxime Cheramy <maxime81@gmail.com>
- * Nicolas Floquet <nicolasfloquet@gmail.com>
- * Benjamin Hautbois <bhautboi@gmail.com>
- * Ludovic Rigal <ludovic.rigal@gmail.com>
- * Simon Vernhes <simon@vernhes.eu>
  *
  * @section LICENSE
  *
@@ -36,7 +31,6 @@
 //Pour plus d'infos sur sysenter: Doc Intel 2B 4-483
 
 #include <msr.h>
-#include <stdio.h>
 #include <string.h>
 #include <interrupts.h>
 #include "ksyscall.h"

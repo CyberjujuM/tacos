@@ -3,11 +3,6 @@
  *
  * @author TacOS developers 
  *
- * Maxime Cheramy <maxime81@gmail.com>
- * Nicolas Floquet <nicolasfloquet@gmail.com>
- * Benjamin Hautbois <bhautboi@gmail.com>
- * Ludovic Rigal <ludovic.rigal@gmail.com>
- * Simon Vernhes <simon@vernhes.eu>
  *
  * @section LICENSE
  *
@@ -35,7 +30,6 @@
 #include <sem.h>
 #include <unistd.h>
 #include <sys/syscall.h>
-#include <process.h>
 
 #define MAX_SEM 256
 #define KSEM_GET 1

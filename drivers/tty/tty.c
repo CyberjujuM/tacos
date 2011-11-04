@@ -3,11 +3,6 @@
  *
  * @author TacOS developers 
  *
- * Maxime Cheramy <maxime81@gmail.com>
- * Nicolas Floquet <nicolasfloquet@gmail.com>
- * Benjamin Hautbois <bhautboi@gmail.com>
- * Ludovic Rigal <ludovic.rigal@gmail.com>
- * Simon Vernhes <simon@vernhes.eu>
  *
  * @section LICENSE
  *
@@ -37,6 +32,7 @@
 #include "kprocess.h"
 #include "ksignal.h"
 #include "kstdio.h"
+#include <scheduler.h>
 #include <klog.h>
 #include <kmalloc.h>
 #include <fcntl.h>
@@ -128,11 +124,11 @@ size_t tty_write(open_file_descriptor *ofd, const void *buf, size_t count) {
     return -1;
   }
 
-	int pid = get_pid();
 	terminal_t *t = (terminal_t *) ofd->extra_data;
+	process_t *current_process = get_current_process();
 
-	if (get_process(pid) != t->fg_process) {
-		sys_kill(pid, SIGTTOU, NULL);
+	if (current_process != t->fg_process) {
+		sys_kill(current_process->pid, SIGTTOU, NULL);
 	}
 
 	for (i = 0; i < count; i++) {
@@ -149,10 +145,10 @@ size_t tty_read(open_file_descriptor *ofd, void *buf, size_t count) {
 	char c;
 	unsigned int j = 0;
 	terminal_t *t = (terminal_t *) ofd->extra_data;
-	int pid = get_pid();
+	process_t *current_process = get_current_process();
 
-	if (get_process(pid) != t->fg_process) {
-		sys_kill(pid, SIGTTIN, NULL);
+	if (current_process != t->fg_process) {
+		sys_kill(current_process->pid, SIGTTIN, NULL);
 	}
 
   if((ofd->flags & O_ACCMODE) == O_WRONLY) {

@@ -3,11 +3,6 @@
  *
  * @author TacOS developers 
  *
- * Maxime Cheramy <maxime81@gmail.com>
- * Nicolas Floquet <nicolasfloquet@gmail.com>
- * Benjamin Hautbois <bhautboi@gmail.com>
- * Ludovic Rigal <ludovic.rigal@gmail.com>
- * Simon Vernhes <simon@vernhes.eu>
  *
  * @section LICENSE
  *
@@ -33,9 +28,9 @@
  */
 
 #include <signal.h>
-#include <unistd.h>
+#include <stdlib.h>
 #include <sys/syscall.h>
-#include <process.h>
+#include <unistd.h>
 
 int kill(unsigned int pid, int sig)
 {

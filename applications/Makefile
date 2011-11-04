@@ -1,5 +1,5 @@
 #OBJ=cube top matrix test test_sig demo cat ls fopen snake
-OBJ=top test_sig cat ls mkdir kill clock_graph test_mouse zen_graph
+OBJ=test_sig cat ls kill clock_graph test_mouse pres zen_graph
 SUBDIRS=mishell
 LIBS=../lib/libc.a ../lib/libsystem.a ../lib/libutils.a 
 INCLUDES=-I../include/ -I../libc/include/
@@ -105,8 +105,7 @@ clock_graph.o: ../libc/include/sys/ioctl.h ../include/vesa_types.h
 cube.o: ../libc/include/stdio.h ../libc/include/libio.h
 cube.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
 cube.o: ../libc/include/stdlib.h ../libc/include/malloc.h
-cube.o: ../libc/include/time.h ../include/process.h ../include/types.h
-cube.o: ../include/vmm.h ../libc/include/signal.h ../libc/include/string.h
+cube.o: ../libc/include/time.h ../libc/include/string.h
 cube.o: ../libc/include/unistd.h
 cube_graph.o: ../libc/include/string.h ../libc/include/sys/types.h
 cube_graph.o: ../libc/include/sys/syscall.h ../libc/include/unistd.h
@@ -114,8 +113,7 @@ cube_graph.o: ../include/vga_types.h
 demo.o: ../libc/include/stdio.h ../libc/include/libio.h
 demo.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
 demo.o: ../libc/include/stdlib.h ../libc/include/malloc.h
-demo.o: ../libc/include/time.h ../include/process.h ../include/types.h
-demo.o: ../include/vmm.h ../libc/include/signal.h ../libc/include/string.h
+demo.o: ../libc/include/time.h ../libc/include/string.h
 demo.o: ../libc/include/unistd.h
 fiinou.o: ../libc/include/stdio.h ../libc/include/libio.h
 fiinou.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
@@ -134,8 +132,7 @@ ls.o: ../libc/include/unistd.h
 matrix.o: ../libc/include/stdio.h ../libc/include/libio.h
 matrix.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
 matrix.o: ../libc/include/stdlib.h ../libc/include/malloc.h
-matrix.o: ../libc/include/unistd.h ../include/process.h ../include/types.h
-matrix.o: ../include/vmm.h ../libc/include/signal.h
+matrix.o: ../libc/include/unistd.h
 mkdir.o: ../libc/include/dirent.h ../libc/include/sys/types.h
 mkdir.o: ../libc/include/sys/stat.h ../libc/include/stdio.h
 mkdir.o: ../libc/include/libio.h ../libc/include/stdarg.h
@@ -145,8 +142,7 @@ noxeyes.o: ../libc/include/stdarg.h ../libc/include/stdlib.h
 noxeyes.o: ../libc/include/malloc.h ../libc/include/unistd.h
 pres.o: ../libc/include/stdio.h ../libc/include/libio.h
 pres.o: ../libc/include/sys/types.h ../libc/include/stdarg.h ../include/gui.h
-pres.o: ../include/types.h ../include/process.h ../include/vmm.h
-pres.o: ../libc/include/signal.h
+pres.o: ../include/types.h
 sem_ping.o: ../include/sem.h ../include/types.h ../libc/include/stdio.h
 sem_ping.o: ../libc/include/libio.h ../libc/include/sys/types.h
 sem_ping.o: ../libc/include/stdarg.h ../libc/include/unistd.h
@@ -168,10 +164,11 @@ test_mouse.o: ../libc/include/unistd.h ../include/vga_types.h
 test_sig.o: ../libc/include/stdio.h ../libc/include/libio.h
 test_sig.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
 test_sig.o: ../libc/include/signal.h
-top.o: ../libc/include/stdio.h ../libc/include/libio.h
-top.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
-top.o: ../libc/include/time.h ../include/process.h ../include/types.h
-top.o: ../include/vmm.h ../libc/include/signal.h ../libc/include/unistd.h
+top.o: ../include/process.h ../include/types.h ../include/elf.h
+top.o: ../libc/include/libio.h ../libc/include/sys/types.h
+top.o: ../libc/include/stdio.h ../libc/include/stdarg.h
+top.o: ../libc/include/stdlib.h ../libc/include/malloc.h
+top.o: ../libc/include/time.h ../libc/include/unistd.h
 zen.o: ../libc/include/stdio.h ../libc/include/libio.h
 zen.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
 zen.o: ../libc/include/stdlib.h ../libc/include/malloc.h

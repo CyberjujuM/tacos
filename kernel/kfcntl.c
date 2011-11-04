@@ -3,11 +3,6 @@
  *
  * @author TacOS developers 
  *
- * Maxime Cheramy <maxime81@gmail.com>
- * Nicolas Floquet <nicolasfloquet@gmail.com>
- * Benjamin Hautbois <bhautboi@gmail.com>
- * Ludovic Rigal <ludovic.rigal@gmail.com>
- * Simon Vernhes <simon@vernhes.eu>
  *
  * @section LICENSE
  *
@@ -35,7 +30,6 @@
 #include <kprocess.h>
 #include <ksyscall.h>
 #include <scheduler.h>
-#include <stdio.h>
 #include <kfat.h>
 #include <string.h>
 #include <kmalloc.h>
@@ -62,7 +56,7 @@ void init_stdfd(process_t *new_proc) {
         tty_init(t, new_proc, (void *)console,(void (*)(void *, char)) kputchar);
         new_proc->ctrl_tty = t_i;
     } else {
-        process_t *pprocess = get_process(new_proc->ppid);
+        process_t *pprocess = find_process(new_proc->ppid);
         int t_i = pprocess->ctrl_tty;
 				t = tty_get(t_i);
 				new_proc->ctrl_tty = t_i;

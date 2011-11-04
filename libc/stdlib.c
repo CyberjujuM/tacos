@@ -3,11 +3,6 @@
  *
  * @author TacOS developers 
  *
- * Maxime Cheramy <maxime81@gmail.com>
- * Nicolas Floquet <nicolasfloquet@gmail.com>
- * Benjamin Hautbois <bhautboi@gmail.com>
- * Ludovic Rigal <ludovic.rigal@gmail.com>
- * Simon Vernhes <simon@vernhes.eu>
  *
  * @section LICENSE
  *
@@ -32,13 +27,17 @@
  * Description de ce que fait le fichier
  */
 
+#include <ctype.h>
+#include <errno.h>
+#include <heap.h>
+#include <malloc.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <heap.h>
-#include <errno.h>
-#include <ctype.h>
 #include <string.h>
-#include <malloc.h>
+#include <sys/syscall.h>
+#include <unistd.h>
+
+char **environ = NULL;
 
 void *calloc(size_t nmemb, size_t size)
 {
@@ -216,4 +215,36 @@ int rand(void) {
 
 void srand(unsigned int seed) {
 	random_number = seed;
+}
+
+void exit(int value)
+{
+	fcloseall();	
+	syscall(SYS_EXIT, (uint32_t)value, 0, 0);
+	while(1); // Pour ne pas continuer à executer n'importe quoi alors que le processus est sensé être arrété
+}
+
+char *getenv(const char *name) {
+  int i = 0;
+  while (environ[i] != NULL) {
+    int len = strlen(name);
+    if (strncmp(environ[i], name, len) == 0) {
+      if (environ[i][len] == '=') {
+        return environ[i] + len + 1;
+      }
+    }
+    i++;
+  } 
+  return NULL;
+}
+
+int clearenv(void) {
+	int i = 0;
+	while (environ[i] != NULL) {
+		free(environ[i]);
+		i++;
+	}
+	free(environ);
+	environ = NULL;
+	return 0;
 }

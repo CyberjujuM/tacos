@@ -3,11 +3,6 @@
  *
  * @author TacOS developers 
  *
- * Maxime Cheramy <maxime81@gmail.com>
- * Nicolas Floquet <nicolasfloquet@gmail.com>
- * Benjamin Hautbois <bhautboi@gmail.com>
- * Ludovic Rigal <ludovic.rigal@gmail.com>
- * Simon Vernhes <simon@vernhes.eu>
  *
  * @section LICENSE
  *
@@ -39,7 +34,7 @@
  * 
  */
  
-#include <process.h>
+#include <kprocess.h>
 #include <ksyscall.h>
 
 /* Cette structure doit contenir les differents pointeurs de fonctions pour manipuler le scheduler */

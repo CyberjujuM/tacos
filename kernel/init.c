@@ -1,5 +1,5 @@
 /**
- * @file test.c
+ * @file init.c
  *
  * @author TacOS developers 
  *
@@ -24,18 +24,35 @@
  *
  * @section DESCRIPTION
  *
- * Programme de test à usage variable
+ * Description de ce que fait le fichier
  */
 
-#include <stdio.h>
-#include <unistd.h>
 
-int main(int argc, char** argv)
+#include <symtable.h>
+#include <stdio.h>
+#include <klog.h>
+
+int init(int argc __attribute__ ((unused)), char** argv __attribute__ ((unused)))
 {
+	init_stdfiles();
+	klog("Starting init process...");
+	
+	klog("Loading kernel symbol table...");
+	load_kernel_symtable();
+	
+	
+	/* Initialisation des drivers */
+	klog("Initializing drivers...");
+	init_driver_list();
+	init_dummy();
+	init_mouse();
+	/* ************************** */
+	
+	klog("Starting user process...");
+	exec_elf("/bin/mishell", 0);
+	
 	while(1) {
-		printf(".");
-		fflush(stdout);
-		sleep(10);
+		asm("hlt");
 	}
 	return 0;
-}	
+}

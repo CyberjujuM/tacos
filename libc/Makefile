@@ -1,5 +1,5 @@
 INCLUDES = -I../include/ -Iinclude/
-CFLAGS=-W -Wall -g -nostdlib -nostdinc -nostartfiles -nodefaultlibs -fno-builtin -I`pwd` -m32
+CFLAGS=-W -Wall $(WE) -g -nostdlib -nostdinc -nostartfiles -nodefaultlibs -fno-builtin -I`pwd` -m32
 SRCS = *.c */*.c
 
 all: libc
@@ -27,30 +27,27 @@ dirent.o: include/stdlib.h include/malloc.h include/string.h
 dirent.o: include/sys/syscall.h include/unistd.h
 elf.o: ../include/elf.h include/libio.h include/sys/types.h include/stdio.h
 elf.o: include/stdarg.h include/string.h include/stdlib.h include/malloc.h
+elf.o: include/fcntl.h
 fcntl.o: include/fcntl.h include/unistd.h include/sys/types.h
 fcntl.o: include/sys/syscall.h
 ioctl.o: include/sys/ioctl.h include/sys/syscall.h include/sys/types.h
 ioctl.o: include/unistd.h
 libio.o: include/libio.h include/sys/types.h include/stdio.h include/stdarg.h
 malloc.o: include/stdio.h include/libio.h include/sys/types.h
-malloc.o: include/stdarg.h ../include/process.h ../include/types.h
-malloc.o: ../include/vmm.h include/signal.h include/unistd.h
-malloc.o: include/sys/syscall.h include/malloc.h
+malloc.o: include/stdarg.h include/unistd.h include/sys/syscall.h
+malloc.o: include/malloc.h
 process.o: include/sys/types.h include/stdlib.h include/malloc.h
 process.o: include/stdio.h include/libio.h include/stdarg.h include/unistd.h
 process.o: include/sys/syscall.h ../include/process.h ../include/types.h
-process.o: ../include/vmm.h include/signal.h ../include/elf.h
-process.o: include/string.h
-signal.o: include/signal.h include/sys/types.h include/unistd.h
-signal.o: include/sys/syscall.h ../include/process.h include/libio.h
-signal.o: ../include/types.h ../include/vmm.h
-start.o: include/libio.h include/sys/types.h ../include/process.h
-start.o: ../include/types.h ../include/vmm.h include/signal.h include/stdio.h
+process.o: ../include/elf.h include/string.h include/fcntl.h
+signal.o: include/signal.h include/sys/types.h include/stdlib.h
+signal.o: include/malloc.h include/sys/syscall.h include/unistd.h
+start.o: include/libio.h include/sys/types.h include/signal.h include/stdio.h
 start.o: include/stdarg.h include/stdlib.h include/malloc.h
-stdlib.o: include/stdio.h include/libio.h include/sys/types.h
-stdlib.o: include/stdarg.h include/stdlib.h include/malloc.h
-stdlib.o: ../include/heap.h ../include/types.h include/errno.h
-stdlib.o: include/ctype.h include/string.h
+stdlib.o: include/ctype.h include/errno.h ../include/heap.h
+stdlib.o: ../include/types.h include/malloc.h include/sys/types.h
+stdlib.o: include/stdio.h include/libio.h include/stdarg.h include/stdlib.h
+stdlib.o: include/string.h include/sys/syscall.h include/unistd.h
 string.o: include/stdlib.h include/sys/types.h include/malloc.h
 string.o: include/string.h include/ctype.h
 termios.o: include/termios.h include/sys/ioctl.h
@@ -71,7 +68,8 @@ stdio/fopen.o: include/stdio.h include/libio.h include/sys/types.h
 stdio/fopen.o: include/stdarg.h include/stdlib.h include/malloc.h
 stdio/fopen.o: include/string.h include/fcntl.h include/unistd.h
 stdio/fprintf.o: include/stdio.h include/libio.h include/sys/types.h
-stdio/fprintf.o: include/stdarg.h include/string.h
+stdio/fprintf.o: include/stdarg.h include/string.h include/stdlib.h
+stdio/fprintf.o: include/malloc.h
 stdio/fread.o: include/stdio.h include/libio.h include/sys/types.h
 stdio/fread.o: include/stdarg.h
 stdio/fseek.o: include/stdio.h include/libio.h include/sys/types.h
