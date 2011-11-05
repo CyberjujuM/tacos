@@ -47,10 +47,15 @@ gdt.o: ../include/types.h include/memory.h include/gdt.h
 i8254.o: include/i8254.h ../include/types.h ../include/ioports.h
 i8259.o: ../include/types.h ../include/ioports.h
 idt.o: ../include/types.h include/idt.h
-init.o: ../include/symtable.h ../include/types.h ../include/elf.h
-init.o: ../libc/include/stdio.h ../libc/include/libio.h
-init.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
-init.o: ../include/klog.h ../include/kstdio.h
+init.o: include/kdriver.h ../include/types.h include/kfcntl.h
+init.o: ../libc/include/libio.h ../libc/include/sys/types.h
+init.o: include/kprocess.h include/ksyscall.h ../include/process.h
+init.o: ../include/elf.h ../libc/include/signal.h ../include/symtable.h
+init.o: ../include/vmm.h ../include/klog.h ../include/kstdio.h
+init.o: include/scheduler.h include/drivers/dummy_driver.h
+init.o: include/drivers/mouse.h include/drivers/vesa.h
+init.o: ../libc/include/stdio.h ../libc/include/stdarg.h
+init.o: ../libc/include/stdlib.h ../libc/include/malloc.h
 interrupts.o: ../include/types.h include/idt.h include/i8259.h
 interrupts.o: ../include/interrupts.h
 kdirent.o: include/kdirent.h include/ksyscall.h ../include/types.h
@@ -145,6 +150,7 @@ module.o: ../include/klog.h ../include/kstdio.h include/module.h
 module.o: ../include/types.h ../include/kmalloc.h ../include/symtable.h
 module.o: ../include/elf.h ../libc/include/stdio.h ../libc/include/libio.h
 module.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
+module.o: ../libc/include/unistd.h ../libc/include/fcntl.h
 module.o: ../libc/include/string.h ../libc/include/stdlib.h
 module.o: ../libc/include/malloc.h
 pagination.o: ../include/types.h include/memory.h include/pagination.h

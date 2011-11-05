@@ -60,7 +60,7 @@ static void remap_backbuffer(paddr_t p_addr_base) {
 	}
 }
 
-static int vesa_ioctl(open_file_descriptor* ofd __attribute__ ((unused)), unsigned int request, unsigned long data) {
+static int vesa_ioctl(open_file_descriptor* ofd __attribute__ ((unused)), unsigned int request, void* data) {
 	struct vesa_setmode_req* req = (struct vesa_setmode_req*)data;
 	switch (request) {
 		case SETMODE:

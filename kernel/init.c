@@ -34,6 +34,7 @@
 #include <symtable.h>
 #include <drivers/dummy_driver.h>
 #include <drivers/mouse.h>
+#include <drivers/vesa.h>
 
 /* LibC */
 #include <stdio.h>
