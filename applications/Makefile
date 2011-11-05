@@ -1,8 +1,9 @@
 #OBJ=cube top matrix test test_sig demo cat ls fopen snake
 OBJ=ls tacos test_cpp printenv
 SUBDIRS=mishell
-LIBS=../lib/libc.a ../lib/libsystem.a ../lib/libutils.a 
+LIBS=../lib/libc.a ../lib/libsystem.a ../lib/libutils.a  ../lib/libstl.a
 INCLUDES=-I../include/ -I../libc/include/
+CPPINCLUDES=-I../libs/stl/
 CFLAGS=-W -Wall -g -nostdlib -nostdinc -nostartfiles -nodefaultlibs -fno-builtin -I`pwd` -m32
 CPPFLAGS=-W -Wall -g -nostdlib -nostdinc -nostartfiles -nodefaultlibs -fno-builtin -I`pwd` -m32 -fno-rtti -fno-exceptions
 LD=ld -Ttext=40000000 --entry=start_main -melf_i386
@@ -95,10 +96,10 @@ test_cpp: test_cpp.o
 	$(CC) -o $@ -c $< $(CFLAGS) $(INCLUDES)
 
 %.o: %.cpp
-	$(CPPC) -o $@ -c $< $(CPPFLAGS) $(INCLUDES)
+	$(CPPC) -o $@ -c $< $(CPPFLAGS) $(INCLUDES) $(CPPINCLUDES)
 
 depend: $(SRCS)
-	makedepend -Y $(INCLUDES) -- $(CFLAGS) -- $^
+	makedepend -Y $(INCLUDES) $(CPPINCLUDES) -- $(CFLAGS) -- $^
 
 clean:
 	@for i in $(SUBDIRS); do \
@@ -152,15 +153,6 @@ matrix.o: ../libc/include/unistd.h
 mkdir.o: ../libc/include/dirent.h ../libc/include/sys/types.h
 mkdir.o: ../libc/include/sys/stat.h ../libc/include/stdio.h
 mkdir.o: ../libc/include/libio.h ../libc/include/stdarg.h
-nico.o: ../libc/include/stdio.h ../libc/include/libio.h
-nico.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
-nico.o: ../libc/include/fcntl.h ../libc/include/unistd.h
-nico.o: ../libc/include/string.h ../libc/include/time.h
-nico.o: ../libc/include/sys/ioctl.h ../include/vesa_types.h
-noxeyes.o: ../libc/include/fcntl.h ../libc/include/stdio.h
-noxeyes.o: ../libc/include/libio.h ../libc/include/sys/types.h
-noxeyes.o: ../libc/include/stdarg.h ../libc/include/stdlib.h
-noxeyes.o: ../libc/include/malloc.h ../libc/include/unistd.h
 pres.o: ../libc/include/stdio.h ../libc/include/libio.h
 pres.o: ../libc/include/sys/types.h ../libc/include/stdarg.h ../include/gui.h
 pres.o: ../include/types.h
@@ -211,4 +203,5 @@ zen_graph.o: ../libc/include/unistd.h ../include/vga_types.h
 zen_graph.o: ../libc/include/sys/syscall.h
 test_cpp.o: ../libc/include/cstdio ../libc/include/stdio.h
 test_cpp.o: ../libc/include/libio.h ../libc/include/sys/types.h
-test_cpp.o: ../libc/include/stdarg.h
+test_cpp.o: ../libc/include/stdarg.h ../libs/stl/vector
+test_cpp.o: ../libs/stl/stl_vector.h
