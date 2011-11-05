@@ -46,6 +46,7 @@ int init(int argc __attribute__ ((unused)), char** argv __attribute__ ((unused))
 	init_driver_list();
 	init_dummy();
 	init_mouse();
+	init_vesa();
 	/* ************************** */
 	
 	klog("Starting user process...");
