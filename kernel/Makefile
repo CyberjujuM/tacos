@@ -48,9 +48,9 @@ i8254.o: include/i8254.h ../include/types.h ../include/ioports.h
 i8259.o: ../include/types.h ../include/ioports.h
 idt.o: ../include/types.h include/idt.h
 init.o: ../include/symtable.h ../include/types.h ../include/elf.h
-init.o: ../libc/include/libio.h ../libc/include/sys/types.h
-init.o: ../libc/include/stdio.h ../libc/include/stdarg.h ../include/klog.h
-init.o: ../include/kstdio.h
+init.o: ../libc/include/stdio.h ../libc/include/libio.h
+init.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
+init.o: ../include/klog.h ../include/kstdio.h
 interrupts.o: ../include/types.h include/idt.h include/i8259.h
 interrupts.o: ../include/interrupts.h
 kdirent.o: include/kdirent.h include/ksyscall.h ../include/types.h
@@ -105,16 +105,14 @@ kpanic.o: ../libc/include/sys/types.h ../include/process.h ../include/elf.h
 kpanic.o: ../libc/include/signal.h ../include/symtable.h ../include/vmm.h
 kpanic.o: include/scheduler.h ../include/console.h ../include/tty.h
 kpanic.o: include/kfcntl.h
-kprocess.o: ../include/debug.h ../include/elf.h ../libc/include/libio.h
-kprocess.o: ../libc/include/sys/types.h include/gdt.h ../include/types.h
-kprocess.o: include/kfcntl.h include/kprocess.h include/ksyscall.h
+kprocess.o: ../include/debug.h ../include/elf.h ../include/types.h
+kprocess.o: include/gdt.h include/kfcntl.h ../libc/include/libio.h
+kprocess.o: ../libc/include/sys/types.h include/kprocess.h include/ksyscall.h
 kprocess.o: ../include/process.h ../libc/include/signal.h
 kprocess.o: ../include/symtable.h ../include/vmm.h ../include/klog.h
 kprocess.o: ../include/kstdio.h ../include/kmalloc.h include/scheduler.h
-kprocess.o: ../libc/include/stdlib.h ../libc/include/malloc.h
-kprocess.o: ../libc/include/string.h ../include/tty.h ../include/video.h
-kprocess.o: include/pagination.h ../include/console.h ../include/vga.h
-kprocess.o: ../include/vga_types.h
+kprocess.o: ../libc/include/string.h ../include/tty.h include/pagination.h
+kprocess.o: ../include/console.h ../include/vga.h ../include/vga_types.h
 ksem.o: include/ksem.h include/ksyscall.h ../include/types.h
 ksem.o: include/kprocess.h ../libc/include/libio.h
 ksem.o: ../libc/include/sys/types.h ../include/process.h ../include/elf.h
@@ -127,12 +125,11 @@ ksignal.o: ../libc/include/libio.h ../include/process.h ../include/elf.h
 ksignal.o: ../include/symtable.h ../include/vmm.h ../include/kstdio.h
 ksignal.o: include/scheduler.h ../include/klog.h
 ksignal.o: ../libc/include/sys/syscall.h ../include/interrupts.h
-kstdio.o: ../include/video.h ../include/types.h ../libc/include/fcntl.h
-kstdio.o: include/kfcntl.h ../libc/include/libio.h
-kstdio.o: ../libc/include/sys/types.h include/kprocess.h include/ksyscall.h
-kstdio.o: ../include/process.h ../include/elf.h ../libc/include/signal.h
-kstdio.o: ../include/symtable.h ../include/vmm.h ../include/console.h
-kstdio.o: ../include/tty.h
+kstdio.o: ../libc/include/fcntl.h include/kfcntl.h ../include/types.h
+kstdio.o: ../libc/include/libio.h ../libc/include/sys/types.h
+kstdio.o: include/kprocess.h include/ksyscall.h ../include/process.h
+kstdio.o: ../include/elf.h ../libc/include/signal.h ../include/symtable.h
+kstdio.o: ../include/vmm.h ../include/console.h ../include/tty.h
 ksyscall.o: include/msr.h ../libc/include/string.h
 ksyscall.o: ../libc/include/sys/types.h ../include/interrupts.h
 ksyscall.o: ../include/types.h include/ksyscall.h ../include/klog.h
@@ -146,10 +143,10 @@ mbr.o: ../include/floppy.h ../include/types.h include/mbr.h
 memory.o: ../include/types.h include/memory.h
 module.o: ../include/klog.h ../include/kstdio.h include/module.h
 module.o: ../include/types.h ../include/kmalloc.h ../include/symtable.h
-module.o: ../include/elf.h ../libc/include/libio.h
-module.o: ../libc/include/sys/types.h ../libc/include/stdio.h
-module.o: ../libc/include/stdarg.h ../libc/include/string.h
-module.o: ../libc/include/stdlib.h ../libc/include/malloc.h
+module.o: ../include/elf.h ../libc/include/stdio.h ../libc/include/libio.h
+module.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
+module.o: ../libc/include/string.h ../libc/include/stdlib.h
+module.o: ../libc/include/malloc.h
 pagination.o: ../include/types.h include/memory.h include/pagination.h
 pagination.o: ../include/vmm.h
 round_robin.o: ../include/kmalloc.h ../include/types.h include/kprocess.h
@@ -176,6 +173,6 @@ symtable.o: ../libc/include/fcntl.h
 vm86.o: ../include/debug.h include/gdt.h ../include/types.h
 vmm.o: include/memory.h ../include/types.h include/pagination.h
 vmm.o: ../include/vmm.h ../include/process.h ../include/elf.h
-vmm.o: ../libc/include/libio.h ../libc/include/sys/types.h include/ksyscall.h
-vmm.o: ../include/kstdio.h include/scheduler.h include/kprocess.h
+vmm.o: include/ksyscall.h ../include/kstdio.h include/scheduler.h
+vmm.o: include/kprocess.h ../libc/include/libio.h ../libc/include/sys/types.h
 vmm.o: ../libc/include/signal.h ../include/symtable.h

@@ -37,11 +37,9 @@
 #include <ksyscall.h>
 #include <libio.h> 
 #include <scheduler.h>
-#include <stdlib.h>
 #include <string.h>
 #include <tty.h>
 #include <types.h>
-#include <video.h>
 #include <pagination.h>
 #include <console.h>
 #include <vga.h>
@@ -182,19 +180,20 @@ int arg_build(char* string, vaddr_t base, char*** argv_ptr)
 	return argc;
 }
 
-vaddr_t init_stack(uint32_t* base, char* args, paddr_t return_func) {
+vaddr_t init_stack(uint32_t* base, char* args, char** envp, paddr_t return_func) {
 		int argc;
 		char** argv;
 		uint32_t* stack_ptr;
 		
-		argc = arg_build(args, base, &argv);
+		argc = arg_build(args, (vaddr_t)base, &argv);
 		
 		stack_ptr = (uint32_t*) argv[0];
-		*(stack_ptr-1) = (vaddr_t) argv;
-		*(stack_ptr-2) = argc;
-		*(stack_ptr-3) = (vaddr_t) exit;
+		*(stack_ptr-1) = (vaddr_t) envp;
+		*(stack_ptr-2) = (vaddr_t) argv;
+		*(stack_ptr-3) = argc;
+		*(stack_ptr-4) = (vaddr_t) return_func;
 		
-		stack_ptr = stack_ptr - 3;
+		stack_ptr = stack_ptr - 4;
 		
 		return (vaddr_t) stack_ptr;
 }
@@ -231,6 +230,21 @@ process_init_data_t* dup_init_data(process_init_data_t* init_data) {
 	dup->args = kmalloc(strlen(init_data->args) + 1);
 	strcpy(dup->args, init_data->args);
 	
+	if (init_data->envp) {
+		int i;
+		int taille_env = 0;
+		while (init_data->envp[taille_env++]);
+		dup->envp = kmalloc(taille_env * sizeof(char*));
+		for (i = 0; i < taille_env - 1; i++) {
+			klog("%s", init_data->envp[i]);
+			dup->envp[i] = kmalloc(strlen(init_data->envp[i]) + 1);
+			strcpy(dup->envp[i], init_data->envp[i]);
+		}
+		dup->envp[taille_env - 1] = NULL;
+	} else {
+		dup->envp = NULL;
+	}
+
 	dup->exec_type = init_data->exec_type;
 	
 	dup->data = kmalloc(init_data->mem_size +1);
@@ -260,13 +274,7 @@ process_t* create_process_elf(process_init_data_t* init_data)
 	process_init_data_t* init_data_dup;
 	process_t* new_proc;
 	
-	char** argv;
-	char* args;
-	int argc;
 	uint32_t* stack_ptr;
-	
-	vaddr_t temp_buffer;
-	
 		
 	int i;
 	int len;
@@ -315,8 +323,8 @@ process_t* create_process_elf(process_init_data_t* init_data)
 		memcpy((void*)USER_PROCESS_BASE, (void*)init_data_dup->data, init_data_dup->mem_size);
 		
 		/* Initialisation de la pile utilisateur */
-		user_stack = USER_PROCESS_BASE + init_data_dup->mem_size + init_data_dup->stack_size-1;
-		stack_ptr = init_stack(user_stack, init_data_dup->args, exit);
+		user_stack = (uint32_t*) (USER_PROCESS_BASE + init_data_dup->mem_size + init_data_dup->stack_size-1);
+		stack_ptr = (uint32_t*) init_stack(user_stack, init_data_dup->args, init_data_dup->envp, (paddr_t)sys_exit);
 		
 		/* TODO : Ajouter (ici ?) le passage de l'environnement utilisateur */
 
@@ -337,7 +345,7 @@ process_t* create_process_elf(process_init_data_t* init_data)
 	asm("sti");
 	
 	/* Initialisation des registres */
-	init_regs(&(new_proc->regs), stack_ptr, (&sys_stack[init_data_dup->stack_size-1]), init_data_dup->entry_point);
+	init_regs(&(new_proc->regs), (vaddr_t)stack_ptr, (vaddr_t)(&sys_stack[init_data_dup->stack_size-1]), init_data_dup->entry_point);
 	
 	/* Initialisation des compteurs de temps CPU */
 	new_proc->user_time = 0;
@@ -411,9 +419,10 @@ process_t* create_process(process_init_data_t* init_data)
 	argc = arg_build(param,(vaddr_t) &(user_stack[stack_size-1]), &argv);
 	stack_ptr = (uint32_t*) argv[0];
 	
-	*(stack_ptr-1) = (vaddr_t) argv;
-	*(stack_ptr-2) = argc;
-	*(stack_ptr-3) = (vaddr_t) exit;
+	*(stack_ptr-1) = (vaddr_t) NULL;
+	*(stack_ptr-2) = (vaddr_t) argv;
+	*(stack_ptr-3) = argc;
+	*(stack_ptr-4) = (vaddr_t) sys_exit;
 	
 	new_proc->ppid = init_data->ppid;
 	
@@ -434,7 +443,7 @@ process_t* create_process(process_init_data_t* init_data)
 	
 	new_proc->regs.eflags = 0;
 	new_proc->regs.eip = prog;
-	new_proc->regs.esp = (vaddr_t)(stack_ptr-3);
+	new_proc->regs.esp = (vaddr_t)(stack_ptr-4);
 	new_proc->regs.ebp = new_proc->regs.esp;
 	
 	new_proc->regs.kss = 0x10;
@@ -513,10 +522,6 @@ SYSCALL_HANDLER1(sys_exit,uint32_t ret_value __attribute__ ((unused)))
 	current = get_current_process(); 
 	
 	close_all_fd();
-
-	// On repasse en mode texte
-	VGA_set_mode(vga_mode_80x25_text);
-	focus_console(2); // XXX
 
 	terminal_t *t = tty_get(current->ctrl_tty);
 	process_t* pp = find_process(current->ppid);

@@ -1,5 +1,5 @@
 #OBJ=cube top matrix test test_sig demo cat ls fopen snake
-OBJ=ls tacos test_cpp
+OBJ=ls tacos test_cpp printenv
 SUBDIRS=mishell
 LIBS=../lib/libc.a ../lib/libsystem.a ../lib/libutils.a 
 INCLUDES=-I../include/ -I../libc/include/
@@ -34,6 +34,9 @@ matrix: matrix.o
 test: test.o
 	$(LD) -o $(BIN)$@ $^ $(LIBS)
 	
+printenv: printenv.o
+	$(LD) -o $(BIN)$@ $^ $(LIBS)
+
 sem_ping: sem_ping.o
 	$(LD) -o $(BIN)$@ $^ $(LIBS)
 
@@ -161,6 +164,8 @@ noxeyes.o: ../libc/include/malloc.h ../libc/include/unistd.h
 pres.o: ../libc/include/stdio.h ../libc/include/libio.h
 pres.o: ../libc/include/sys/types.h ../libc/include/stdarg.h ../include/gui.h
 pres.o: ../include/types.h
+printenv.o: ../libc/include/stdio.h ../libc/include/libio.h
+printenv.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
 sem_ping.o: ../include/sem.h ../include/types.h ../libc/include/stdio.h
 sem_ping.o: ../libc/include/libio.h ../libc/include/sys/types.h
 sem_ping.o: ../libc/include/stdarg.h ../libc/include/unistd.h
@@ -186,10 +191,11 @@ test_mouse.o: ../libc/include/stdarg.h ../libc/include/sys/syscall.h
 test_mouse.o: ../libc/include/unistd.h ../include/vga_types.h
 test_sig.o: ../libc/include/stdio.h ../libc/include/libio.h
 test_sig.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
-test_sig.o: ../libc/include/signal.h
+test_sig.o: ../libc/include/stdlib.h ../libc/include/malloc.h
+test_sig.o: ../libc/include/string.h ../libc/include/signal.h
 top.o: ../include/process.h ../include/types.h ../include/elf.h
-top.o: ../libc/include/libio.h ../libc/include/sys/types.h
-top.o: ../libc/include/stdio.h ../libc/include/stdarg.h
+top.o: ../libc/include/stdio.h ../libc/include/libio.h
+top.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
 top.o: ../libc/include/stdlib.h ../libc/include/malloc.h
 top.o: ../libc/include/time.h ../libc/include/unistd.h
 zen.o: ../libc/include/stdio.h ../libc/include/libio.h
