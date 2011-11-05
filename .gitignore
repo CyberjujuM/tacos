@@ -1,7 +1,7 @@
-TacOS.config
-TacOS.creator*
-TacOS.files
-TacOS.includes
+tacos.config
+tacos.creator*
+tacos.files
+tacos.includes
 *.o
 *.a
 *.log
