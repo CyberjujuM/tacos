@@ -1,5 +1,5 @@
 #OBJ=cube top matrix test test_sig demo cat ls fopen snake
-OBJ=test_sig cat ls kill clock_graph test_mouse pres zen_graph
+OBJ=ls tacos
 SUBDIRS=mishell
 LIBS=../lib/libc.a ../lib/libsystem.a ../lib/libutils.a 
 INCLUDES=-I../include/ -I../libc/include/
@@ -78,6 +78,9 @@ pres: pres.o
 zen_graph: zen_graph.o
 	$(LD) -o $(BIN)$@ $^ $(LIBS)	
 
+tacos: tacos.o
+	$(LD) -o $(BIN)$@ $^ $(LIBS)
+
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS) $(INCLUDES) 
 
@@ -154,6 +157,11 @@ snake.o: ../libc/include/stdio.h ../libc/include/libio.h
 snake.o: ../libc/include/stdarg.h ../libc/include/stdlib.h
 snake.o: ../libc/include/malloc.h ../libc/include/time.h
 snake.o: ../libc/include/unistd.h ../libc/include/termios.h
+tacos.o: ../libc/include/stdio.h ../libc/include/libio.h
+tacos.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
+tacos.o: ../libc/include/fcntl.h ../libc/include/unistd.h
+tacos.o: ../libc/include/string.h ../libc/include/time.h
+tacos.o: ../libc/include/sys/ioctl.h ../include/vesa_types.h
 test.o: ../libc/include/stdio.h ../libc/include/libio.h
 test.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
 test.o: ../libc/include/unistd.h

@@ -46,6 +46,7 @@ img: all
 	@gzip -dc < grub.img.gz > core.img
 	@MTOOLSRC=mtoolsrc mcopy menu.txt v:/boot/grub/
 	@MTOOLSRC=mtoolsrc mcopy doc.txt v:/
+	@MTOOLSRC=mtoolsrc mcopy tacos.bmp v:/
 	@MTOOLSRC=mtoolsrc mcopy bin v:/
 	@MTOOLSRC=mtoolsrc mcopy modules v:/
 	@MTOOLSRC=mtoolsrc mmd v:/system
