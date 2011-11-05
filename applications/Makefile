@@ -1,12 +1,13 @@
 #OBJ=cube top matrix test test_sig demo cat ls fopen snake
-OBJ=ls tacos
+OBJ=ls tacos test_cpp
 SUBDIRS=mishell
 LIBS=../lib/libc.a ../lib/libsystem.a ../lib/libutils.a 
 INCLUDES=-I../include/ -I../libc/include/
 CFLAGS=-W -Wall -g -nostdlib -nostdinc -nostartfiles -nodefaultlibs -fno-builtin -I`pwd` -m32
+CPPFLAGS=-W -Wall -g -nostdlib -nostdinc -nostartfiles -nodefaultlibs -fno-builtin -I`pwd` -m32 -fno-rtti -fno-exceptions
 LD=ld -Ttext=40000000 --entry=start_main -melf_i386
 BIN=../bin/
-SRCS=*.c
+SRCS=*.c *.cpp
 
 all: $(OBJ)
 	@for i in $(SUBDIRS); do \
@@ -78,11 +79,20 @@ pres: pres.o
 zen_graph: zen_graph.o
 	$(LD) -o $(BIN)$@ $^ $(LIBS)	
 
+nico: nico.o
+	$(LD) -o $(BIN)$@ $^ $(LIBS)
+
 tacos: tacos.o
 	$(LD) -o $(BIN)$@ $^ $(LIBS)
 
+test_cpp: test_cpp.o
+	$(LD) -o $(BIN)$@ $^ $(LIBS)
+
 %.o: %.c
-	$(CC) -o $@ -c $< $(CFLAGS) $(INCLUDES) 
+	$(CC) -o $@ -c $< $(CFLAGS) $(INCLUDES)
+
+%.o: %.cpp
+	$(CPPC) -o $@ -c $< $(CPPFLAGS) $(INCLUDES)
 
 depend: $(SRCS)
 	makedepend -Y $(INCLUDES) -- $(CFLAGS) -- $^
@@ -139,6 +149,11 @@ matrix.o: ../libc/include/unistd.h
 mkdir.o: ../libc/include/dirent.h ../libc/include/sys/types.h
 mkdir.o: ../libc/include/sys/stat.h ../libc/include/stdio.h
 mkdir.o: ../libc/include/libio.h ../libc/include/stdarg.h
+nico.o: ../libc/include/stdio.h ../libc/include/libio.h
+nico.o: ../libc/include/sys/types.h ../libc/include/stdarg.h
+nico.o: ../libc/include/fcntl.h ../libc/include/unistd.h
+nico.o: ../libc/include/string.h ../libc/include/time.h
+nico.o: ../libc/include/sys/ioctl.h ../include/vesa_types.h
 noxeyes.o: ../libc/include/fcntl.h ../libc/include/stdio.h
 noxeyes.o: ../libc/include/libio.h ../libc/include/sys/types.h
 noxeyes.o: ../libc/include/stdarg.h ../libc/include/stdlib.h
@@ -188,3 +203,6 @@ zen_graph.o: ../libc/include/stdlib.h ../libc/include/malloc.h
 zen_graph.o: ../libc/include/time.h ../libc/include/string.h
 zen_graph.o: ../libc/include/unistd.h ../include/vga_types.h
 zen_graph.o: ../libc/include/sys/syscall.h
+test_cpp.o: ../libc/include/cstdio ../libc/include/stdio.h
+test_cpp.o: ../libc/include/libio.h ../libc/include/sys/types.h
+test_cpp.o: ../libc/include/stdarg.h
