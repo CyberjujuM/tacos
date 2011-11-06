@@ -11,3 +11,4 @@ tacos.includes
 *.sw*
 bin/*
 .gitignore
+ne2k-txdump.txt
