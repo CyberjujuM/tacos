@@ -35,14 +35,10 @@
 #include <kmalloc.h>
 #include <kprocess.h>
 #include <ksyscall.h>
-#include <libio.h> 
 #include <scheduler.h>
 #include <string.h>
-#include <tty.h>
 #include <types.h>
 #include <pagination.h>
-#include <console.h>
-#include <vga.h>
 
 #define GET_PROCESS 0
 #define GET_PROCESS_LIST 1
@@ -523,11 +519,6 @@ SYSCALL_HANDLER1(sys_exit,uint32_t ret_value __attribute__ ((unused)))
 	
 	close_all_fd();
 
-	terminal_t *t = tty_get(current->ctrl_tty);
-	process_t* pp = find_process(current->ppid);
-
-	tty_set_fg_process(t, pp);
-	//klog("tty %d %d\n", current->ctrl_tty, pp->pid);
 	//kprintf("DEBUG: exit(process %d returned %d)\n", current->pid, ret_value);
 	
 	// On a pas forcement envie de supprimer le processus immédiatement
