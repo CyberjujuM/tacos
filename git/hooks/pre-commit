@@ -23,7 +23,9 @@ git diff > $TMPDIR/current_change.patch
 git archive $against | tar -x -C $TMPDIR
 # on va dans le dossier temporaire pour appliquer le patch.
 cd $TMPDIR
-patch -p1 < current_change.patch
+git apply current_change.patch
+# make depend
+make depend
 # on compile avec -Werror.
 make WERROR=1
 

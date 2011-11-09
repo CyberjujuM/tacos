@@ -11,3 +11,6 @@ TacOS.includes
 *.sw*
 bin/*
 .gitignore
+ne2k-txdump.txt
+doc
+*.depend
