@@ -76,10 +76,14 @@ static int vesa_ioctl(open_file_descriptor* ofd __attribute__ ((unused)), unsign
 			width = req->width;
 			height = req->height;
 			bpp = (req->bpp + (8 - 1))/8;
-
+			
 			p_backbuffer_base = p_lfb_base;
 			p_frontbuffer_base = p_lfb_base + width * height * bpp;
-		
+
+			while (p_frontbuffer_base % PAGE_SIZE != 0) {
+				p_frontbuffer_base += width * bpp;
+			}
+
 			return 0;
 		case FLUSH: {
 			// Décalage de la zone du LFB affichée
