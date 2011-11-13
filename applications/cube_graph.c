@@ -26,8 +26,9 @@
  * Displays a rotating cube.
  */
 
+#include <fcntl.h>
 #include <string.h>
-#include <sys/syscall.h>
+#include <sys/ioctl.h>
 #include <unistd.h>
 #include <vga_types.h>
 
@@ -149,8 +150,10 @@ void draw_cube(char *buffer) {
 }
 
 int main() {
-	syscall(SYS_VGASETMODE, vga_mode_320x200x256, 0, 0);
+	int vga_fd = open("$vga", O_RDONLY);
+	ioctl(vga_fd, SETMODE, (void*)vga_mode_320x200x256); 
 	init();
+
 	while (1) {	
 		clear_buffer(buffer);
 		int i = 0;
@@ -158,8 +161,11 @@ int main() {
 			rotate_point(cube[i]);
 		}
 		draw_cube(buffer);
-		syscall(SYS_VGAWRITEBUF, (uint32_t)buffer, 0, 0);
+		ioctl(vga_fd, FLUSH, buffer);
 		usleep(10000);
 	}
+
+	close(vga_fd);
+
 	return 0;
 }

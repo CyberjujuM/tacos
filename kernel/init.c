@@ -34,6 +34,7 @@
 #include <symtable.h>
 #include <drivers/dummy_driver.h>
 #include <drivers/mouse.h>
+#include <drivers/vga.h>
 #include <drivers/vesa.h>
 
 /* LibC */
@@ -56,6 +57,7 @@ int init(int argc __attribute__ ((unused)), char** argv __attribute__ ((unused))
 	init_driver_list();
 	init_dummy();
 	init_mouse();
+	init_vga();
 	init_vesa();
 	/* ************************** */
 	

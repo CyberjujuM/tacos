@@ -69,13 +69,13 @@
 #include <klog.h>
 #include <kdriver.h>
 #include <kdirent.h>
-#include <vga.h>
 #include <init.h>
 
 /* Includes des drivers */
 #include <drivers/dummy_driver.h>
 #include <drivers/serial.h>
 #include <drivers/mouse.h>
+#include <drivers/vga.h>
 #include <drivers/vesa.h>
 
 typedef struct
@@ -192,8 +192,6 @@ void cmain (unsigned long magic, unsigned long addr) {
 	syscall_set_handler(SYS_SIGSUSPEND,	(syscall_handler_t) sys_sigsuspend);
 	syscall_set_handler(SYS_GETCLOCK,	(syscall_handler_t) sys_getclock);
 	syscall_set_handler(SYS_GETDATE,	(syscall_handler_t) sys_getdate);
-	syscall_set_handler(SYS_VGASETMODE,	(syscall_handler_t) sys_vgasetmode);
-	syscall_set_handler(SYS_VGAWRITEBUF,	(syscall_handler_t) sys_vgawritebuf);
 	
 	floppy_detect_drives();
 	kdebug("Floppy controller version: 0x%x.", floppy_get_version());
